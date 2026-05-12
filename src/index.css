@@ -301,17 +301,38 @@ body,
 .eb-city-item--empty            { color: #94a3b8; font-style: italic; cursor: default; }
 .eb-city-item-check             { color: #1d4ed8; font-size: 13px; }
 
-/* ── Mobile ≤ 480px ─────────────────────────────────────── */
-@media (max-width: 480px) {
-  .eb-navbar        { height: 56px; padding: 0 10px; gap: 8px; }
-  .eb-navbar-brand  { font-size: 15px; }
+/* ── Mobile ≤ 600px ─────────────────────────────────────── */
+@media (max-width: 600px) {
+  .eb-navbar        { height: 60px; padding: 0 12px; gap: 8px; }
+  .eb-navbar-brand  { font-size: 18px; }
   .eb-navbar-badge  { display: none; }
+  .eb-navbar-updating { font-size: 18px; }
+
   .eb-city-selector { max-width: none; }
-  .eb-city-trigger  { font-size: 16px; padding: 7px 10px; }
-  .eb-city-trigger-icon { display: none; }
-  .eb-city-dropdown { min-width: 180px; max-width: calc(100vw - 20px); }
-  .eb-city-item     { font-size: 16px; padding: 12px 14px; }
-  .eb-city-search   { font-size: 16px; padding: 12px 14px; }
+  .eb-city-trigger  {
+    font-size: 18px;
+    font-weight: 800;
+    padding: 9px 12px;
+    border-radius: 10px;
+  }
+  .eb-city-trigger-icon  { display: none; }
+  .eb-city-trigger-arrow { font-size: 11px; }
+
+  /* Dropdown pleine largeur sur mobile */
+  .eb-city-dropdown {
+    left: 0;
+    right: 0;
+    min-width: unset;
+    max-width: unset;
+    width: calc(100vw - 24px);
+    border-radius: 14px;
+  }
+  .eb-city-search {
+    font-size: 18px;
+    padding: 14px 16px;
+  }
+  .eb-city-list    { max-height: 55vh; }
+  .eb-city-item    { font-size: 18px; padding: 14px 16px; }
 }
 
 /* ── Bandeau ville sans stations ─────────────────────────── */
