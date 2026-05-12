@@ -128,6 +128,7 @@ export function PopupStation({ station }: Props) {
             target="_blank"
             rel="noopener noreferrer"
             className="eb-popup-go"
+            style={{ color: 'white', textDecoration: 'none' }}
           >
             Y aller →
           </a>
