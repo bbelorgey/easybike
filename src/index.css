@@ -1,0 +1,291 @@
+@import 'leaflet/dist/leaflet.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Force Leaflet marker icons (broken by default with Vite's asset hashing) */
+.leaflet-default-icon-path {
+  background-image: url('leaflet/dist/images/marker-icon.png');
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  height: 100dvh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+/* Prevent map tiles from being cropped on mobile */
+.leaflet-container {
+  height: 100%;
+  width: 100%;
+}
+
+/* ── Popup station redesign ─────────────────────────────── */
+.eb-popup {
+  font-family: system-ui, -apple-system, sans-serif;
+  min-width: 220px;
+  overflow: hidden;
+  margin: -14px -20px -14px -20px; /* déborde du padding Leaflet */
+}
+
+/* Header coloré selon dispo */
+.eb-popup-header {
+  padding: 14px 16px 12px;
+  position: relative;
+}
+.eb-popup-header--open-full  { background: linear-gradient(135deg, #16a34a, #22c55e); }
+.eb-popup-header--open-mid   { background: linear-gradient(135deg, #d97706, #f59e0b); }
+.eb-popup-header--open-low   { background: linear-gradient(135deg, #dc2626, #ef4444); }
+.eb-popup-header--closed     { background: linear-gradient(135deg, #475569, #64748b); }
+
+.eb-popup-status-badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.85);
+  background: rgba(0,0,0,0.15);
+  padding: 2px 8px;
+  border-radius: 20px;
+  margin-bottom: 6px;
+}
+
+.eb-popup-name {
+  font-size: 15px;
+  font-weight: 800;
+  color: white;
+  line-height: 1.2;
+  margin: 0 0 3px;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.eb-popup-address {
+  font-size: 11px;
+  color: rgba(255,255,255,0.8);
+  margin: 0;
+}
+
+/* Barre de jauge vélos */
+.eb-popup-gauge {
+  height: 6px;
+  background: rgba(0,0,0,0.12);
+  margin: 10px 16px 0;
+  border-radius: 3px;
+  overflow: hidden;
+}
+.eb-popup-gauge-bar {
+  height: 100%;
+  border-radius: 3px;
+  background: rgba(255,255,255,0.7);
+  transition: width 0.4s ease;
+}
+
+/* Stats */
+.eb-popup-stats {
+  display: flex;
+  gap: 0;
+  padding: 14px 16px 12px;
+  background: white;
+}
+.eb-popup-stat {
+  flex: 1;
+  text-align: center;
+  padding: 0 4px;
+}
+.eb-popup-stat + .eb-popup-stat {
+  border-left: 1px solid #f1f5f9;
+}
+.eb-popup-stat-value {
+  font-size: 26px;
+  font-weight: 800;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.eb-popup-stat-value--bikes  { color: #16a34a; }
+.eb-popup-stat-value--stands { color: #2563eb; }
+.eb-popup-stat-value--total  { color: #94a3b8; }
+.eb-popup-stat-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.eb-popup-stat-icon {
+  font-size: 14px;
+  display: block;
+  margin-bottom: 2px;
+}
+
+/* Actions */
+.eb-popup-actions {
+  display: flex;
+  gap: 8px;
+  padding: 0 12px 12px;
+  background: white;
+  align-items: center;
+}
+.eb-popup-btn {
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 6px 10px;
+  line-height: 1;
+  transition: transform 0.12s, background 0.12s;
+  background: #f1f5f9;
+  color: #64748b;
+}
+.eb-popup-btn:hover  { transform: scale(1.1); background: #e2e8f0; }
+.eb-popup-btn:active { transform: scale(0.95); }
+.eb-popup-btn--fav-active { color: #f59e0b; background: #fef9c3; }
+
+.eb-popup-go {
+  flex: 1;
+  text-align: center;
+  background: #1d4ed8;
+  color: white;
+  border-radius: 8px;
+  padding: 7px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background 0.15s, transform 0.12s;
+  display: block;
+  letter-spacing: 0.02em;
+}
+.eb-popup-go:hover  { background: #1e40af; transform: translateY(-1px); }
+.eb-popup-go:active { transform: translateY(0); }
+
+/* override Leaflet popup padding */
+.leaflet-popup-content { margin: 14px 20px; }
+.leaflet-popup-content-wrapper { padding: 0; border-radius: 14px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.18); }
+.leaflet-popup-tip-container { margin-top: -1px; }
+
+/* ── Navbar ─────────────────────────────────────────────── */
+.eb-navbar {
+  height: 52px;
+  background: linear-gradient(90deg, #1e40af, #1d4ed8);
+  color: white;
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  gap: 10px;
+  flex-shrink: 0;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.25);
+  z-index: 1001;
+}
+.eb-navbar-brand {
+  font-weight: 800;
+  font-size: 17px;
+  letter-spacing: -0.5px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.eb-navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+.eb-navbar-badge {
+  font-size: 11px;
+  background: rgba(0,0,0,0.2);
+  border-radius: 12px;
+  padding: 2px 8px;
+  white-space: nowrap;
+}
+.eb-navbar-updating {
+  font-size: 14px;
+  opacity: 0.75;
+  animation: eb-spin 0.8s linear infinite;
+}
+@keyframes eb-spin { to { transform: rotate(360deg); } }
+
+/* ── CitySelector ────────────────────────────────────────── */
+.eb-city-selector {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex: 1;
+  min-width: 0;
+  max-width: 220px;
+  position: relative;
+}
+.eb-city-selector-icon {
+  font-size: 15px;
+  flex-shrink: 0;
+}
+.eb-city-selector-select {
+  flex: 1;
+  min-width: 0;
+  background: rgba(255,255,255,0.15);
+  border: 1.5px solid rgba(255,255,255,0.3);
+  border-radius: 8px;
+  color: white;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 5px 8px;
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  transition: border-color 0.15s, background 0.15s;
+  /* Custom arrow */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='white' stroke-width='1.8' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  padding-right: 28px;
+}
+.eb-city-selector-select:hover {
+  background-color: rgba(255,255,255,0.22);
+  border-color: rgba(255,255,255,0.5);
+}
+.eb-city-selector-select:focus {
+  background-color: rgba(255,255,255,0.25);
+  border-color: rgba(255,255,255,0.7);
+}
+.eb-city-selector-select option {
+  background: #1e3a5f;
+  color: white;
+  font-weight: 500;
+}
+.eb-city-selector-loading {
+  font-size: 12px;
+  opacity: 0.6;
+  position: absolute;
+  right: 30px;
+}
+
+/* ── Bandeau ville sans stations ─────────────────────────── */
+.eb-no-stations {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  background: white;
+  border-radius: 14px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  padding: 14px 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  max-width: 360px;
+  border-left: 4px solid #dc2626;
+  animation: eb-slide-up 0.25s ease;
+}
+@keyframes eb-slide-up {
+  from { opacity: 0; transform: translateX(-50%) translateY(12px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+.eb-no-stations-icon { font-size: 22px; flex-shrink: 0; }
+.eb-no-stations strong { display: block; font-size: 13px; color: #111; margin-bottom: 3px; }
+.eb-no-stations p { font-size: 12px; color: #64748b; margin: 0; }
