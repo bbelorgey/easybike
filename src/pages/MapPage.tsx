@@ -9,7 +9,8 @@ export function MapPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const selectedCity = useCityStore((s) => s.selectedCity);
   const setCity = useCityStore((s) => s.setCity);
-  const { data: stations, isLoading } = useStations();
+  const { data: stations, isFetching } = useStations();
+  const isLoading = isFetching;
 
   // Lecture du paramètre ?city= à l'initialisation
   useEffect(() => {

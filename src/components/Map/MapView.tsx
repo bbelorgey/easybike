@@ -117,7 +117,7 @@ function FlyToCity() {
 }
 
 export function MapView() {
-  const { isLoading } = useStations();
+  const { isFetching } = useStations();
   const stations = useFilteredStations();
   const center = useMapStore((s) => s.center);
   const zoom = useMapStore((s) => s.zoom);
@@ -156,7 +156,7 @@ export function MapView() {
 
       <UserMarker />
 
-      <MapControls isLoading={isLoading} />
+      <MapControls isLoading={isFetching} />
     </MapContainer>
   );
 }

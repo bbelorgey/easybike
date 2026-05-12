@@ -41,13 +41,12 @@ const IconRefresh = ({ spinning = false }: { spinning?: boolean }) => (
   <svg
     width="20" height="20" viewBox="0 0 24 24" fill="none"
     aria-hidden
-    style={{ transition: 'transform 0.3s', transform: spinning ? 'rotate(360deg)' : 'none' }}
+    style={{
+      animation: spinning ? 'eb-spin-refresh 0.7s linear infinite' : 'none',
+    }}
   >
     <path
-      d="M4 12a8 8 0 018-8 8 8 0 016.32 3.09L20 4v5h-5l1.9-1.9A6 6 0 106 12"
-      stroke="#374151" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-    />
-    <path d="M20 12a8 8 0 01-8 8 8 8 0 01-6.32-3.09L4 20v-5h5l-1.9 1.9A6 6 0 1018 12"
+      d="M4 12a8 8 0 018-8c2.3 0 4.3.96 5.76 2.5L20 4v5h-5l2.1-2.1A6 6 0 106 12"
       stroke="#374151" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
     />
   </svg>
