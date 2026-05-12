@@ -46,17 +46,16 @@ function MapMoveTracker() {
 function FlyToUser() {
   const userPosition = useMapStore((s) => s.userPosition);
   const map = useMap();
-  const hasFlownOnMount = useRef(false);
+  const mountRef = useRef(true);
 
   useEffect(() => {
-    if (!userPosition) return;
-    // Au montage : centrer si position déjà connue (persistée localStorage)
-    if (!hasFlownOnMount.current) {
-      hasFlownOnMount.current = true;
-      map.flyTo(userPosition, 16);
+    // Ignorer au montage : la ville sélectionnée a la priorité au chargement.
+    // Le fly ne se déclenche que lorsque l'utilisateur clique sur le bouton 📍.
+    if (mountRef.current) {
+      mountRef.current = false;
       return;
     }
-    // Changement de position ultérieur : re-centrer
+    if (!userPosition) return;
     map.flyTo(userPosition, 16);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userPosition?.[0], userPosition?.[1]]);
