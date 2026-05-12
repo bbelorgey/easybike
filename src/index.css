@@ -150,17 +150,17 @@ body,
   flex: 1;
   text-align: center;
   background: #1d4ed8;
-  color: white;
+  color: white !important;
   border-radius: 8px;
   padding: 7px 12px;
   font-size: 12px;
   font-weight: 700;
-  text-decoration: none;
+  text-decoration: none !important;
   transition: background 0.15s, transform 0.12s;
   display: block;
   letter-spacing: 0.02em;
 }
-.eb-popup-go:hover  { background: #1e40af; transform: translateY(-1px); }
+.eb-popup-go:hover  { background: #1e40af; transform: translateY(-1px); color: white !important; }
 .eb-popup-go:active { transform: translateY(0); }
 
 /* override Leaflet popup padding */
