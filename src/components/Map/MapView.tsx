@@ -43,6 +43,19 @@ function MapMoveTracker() {
   return null;
 }
 
+/** Consomme flyTarget depuis mapStore pour permettre un flyTo depuis n'importe quel composant */
+function FlyToTarget() {
+  const flyTarget = useMapStore((s) => s.flyTarget);
+  const map = useMap();
+
+  useEffect(() => {
+    if (!flyTarget) return;
+    map.flyTo(flyTarget.pos, flyTarget.zoom);
+  }, [flyTarget, map]);
+
+  return null;
+}
+
 function FlyToUser() {
   const userPosition = useMapStore((s) => s.userPosition);
   const map = useMap();
@@ -126,6 +139,7 @@ export function MapView() {
       <MapMoveTracker />
       <FlyToUser />
       <FlyToCity />
+      <FlyToTarget />
 
       <MarkerClusterGroup
         iconCreateFunction={createClusterIcon}

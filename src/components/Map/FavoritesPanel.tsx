@@ -3,11 +3,18 @@ import { useUiStore } from '../../store/uiStore';
 import { useFavorites } from '../../hooks/useFavorites';
 import { buildStationUrl } from '../../types/itinerary';
 import { parseStationName } from '../../types/station';
+import type { Station } from '../../types/station';
 
 export function FavoritesPanel() {
   const closePanel   = useUiStore((s) => s.closePanel);
   const userPosition = useMapStore((s) => s.userPosition);
+  const flyTo        = useMapStore((s) => s.flyTo);
   const { favStations, toggleFav, selectedCity } = useFavorites();
+
+  const handleLocate = (station: Station) => {
+    flyTo([station.position.lat, station.position.lng], 17);
+    closePanel();
+  };
 
   return (
     <div className="eb-favpanel">
@@ -45,6 +52,21 @@ export function FavoritesPanel() {
                   </span>
                 </div>
                 <div className="eb-favpanel-actions">
+                  {/* Centrer la carte sur la station */}
+                  <button
+                    className="eb-favpanel-locate"
+                    onClick={() => handleLocate(station)}
+                    title="Voir sur la carte"
+                  >
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                      <circle cx="12" cy="12" r="3" fill="#1d4ed8"/>
+                      <circle cx="12" cy="12" r="7" stroke="#1d4ed8" strokeWidth="2" fill="none"/>
+                      <line x1="12" y1="2"  x2="12" y2="5"  stroke="#1d4ed8" strokeWidth="2" strokeLinecap="round"/>
+                      <line x1="12" y1="19" x2="12" y2="22" stroke="#1d4ed8" strokeWidth="2" strokeLinecap="round"/>
+                      <line x1="2"  y1="12" x2="5"  y2="12" stroke="#1d4ed8" strokeWidth="2" strokeLinecap="round"/>
+                      <line x1="19" y1="12" x2="22" y2="12" stroke="#1d4ed8" strokeWidth="2" strokeLinecap="round"/>
+                    </svg>
+                  </button>
                   {mapsUrl && (
                     <a href={mapsUrl} target="_blank" rel="noopener noreferrer"
                       className="eb-favpanel-go" style={{ color: 'white' }}>

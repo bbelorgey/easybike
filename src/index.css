@@ -463,6 +463,18 @@ body,
   transition: background 0.15s;
 }
 .eb-favpanel-go:hover { background: #1e40af; }
+.eb-favpanel-locate {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 6px;
+  cursor: pointer;
+  padding: 5px 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.1s;
+}
+.eb-favpanel-locate:hover { background: #dbeafe; }
 .eb-favpanel-unfav {
   background: none;
   border: 1px solid #e2e8f0;
