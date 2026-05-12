@@ -168,6 +168,28 @@ body,
 .leaflet-popup-content-wrapper { padding: 0; border-radius: 14px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.18); }
 .leaflet-popup-tip-container { margin-top: -1px; }
 
+/* ── Popup mobile ────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .eb-popup                  { min-width: 260px; }
+  .eb-popup-name             { font-size: 17px; }
+  .eb-popup-address          { font-size: 13px; }
+  .eb-popup-status-badge     { font-size: 11px; }
+  .eb-popup-stat-value       { font-size: 30px; }
+  .eb-popup-stat-label       { font-size: 12px; }
+  .eb-popup-stat-icon        { font-size: 16px; }
+  .eb-popup-go {
+    font-size: 15px;
+    padding: 10px 14px;
+    border-radius: 10px;
+  }
+  .eb-popup-btn {
+    font-size: 20px;
+    padding: 9px 12px;
+    border-radius: 10px;
+  }
+  .eb-popup-actions          { gap: 10px; padding: 0 14px 14px; }
+}
+
 /* ── Navbar ─────────────────────────────────────────────── */
 .eb-navbar {
   height: 52px;
