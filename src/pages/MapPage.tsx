@@ -9,18 +9,16 @@ export function MapPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const selectedCity = useCityStore((s) => s.selectedCity);
   const setCity = useCityStore((s) => s.setCity);
+
+  // Appliquer le paramètre URL de façon synchrone, avant que useStations lise le store.
+  // Sans ça, useStations démarre avec la ville du localStorage (race condition).
+  const cityParam = searchParams.get('city');
+  if (cityParam && cityParam !== selectedCity) {
+    setCity(cityParam);
+  }
+
   const { data: stations, isFetching } = useStations();
   const isLoading = isFetching;
-
-  // Lecture du paramètre ?city= à l'initialisation
-  useEffect(() => {
-    const cityParam = searchParams.get('city');
-    if (cityParam && cityParam !== selectedCity) {
-      setCity(cityParam);
-    }
-    // N'exécuter qu'au montage
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   // Maintien du paramètre URL en sync avec la ville sélectionnée
   useEffect(() => {
