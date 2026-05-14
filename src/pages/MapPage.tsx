@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Navbar } from '../components/Layout/Navbar';
 import { MapView } from '../components/Map/MapView';
@@ -10,11 +10,16 @@ export function MapPage() {
   const selectedCity = useCityStore((s) => s.selectedCity);
   const setCity = useCityStore((s) => s.setCity);
 
-  // Appliquer le paramètre URL de façon synchrone, avant que useStations lise le store.
+  // Appliquer le paramètre URL de façon synchrone au PREMIER render uniquement.
+  // Le ref empêche l'override lors des re-renders suivants (ex: l'utilisateur change de ville).
   // Sans ça, useStations démarre avec la ville du localStorage (race condition).
-  const cityParam = searchParams.get('city');
-  if (cityParam && cityParam !== selectedCity) {
-    setCity(cityParam);
+  const urlInitDone = useRef(false);
+  if (!urlInitDone.current) {
+    urlInitDone.current = true;
+    const cityParam = searchParams.get('city');
+    if (cityParam && cityParam !== selectedCity) {
+      setCity(cityParam);
+    }
   }
 
   const { data: stations, isFetching } = useStations();
