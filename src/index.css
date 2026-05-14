@@ -202,28 +202,42 @@ body,
   flex-shrink: 0;
   box-shadow: 0 2px 10px rgba(0,0,0,0.25);
   z-index: 1001;
+  position: relative; /* nécessaire pour eb-navbar-center en absolu */
 }
-.eb-navbar-brand {
+.eb-navbar-logo {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  z-index: 1;
+}
+
+/* Titre centré en position absolue */
+.eb-navbar-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 1px;
-  justify-content: center;
-  flex-shrink: 0;
+  pointer-events: none; /* ne capture pas les clics */
 }
-.eb-navbar-brand-title {
+.eb-navbar-service {
   font-weight: 800;
-  font-size: 16px;
-  letter-spacing: -0.5px;
+  font-size: 15px;
+  letter-spacing: -0.3px;
   white-space: nowrap;
-  line-height: 1.15;
-}
-.eb-navbar-brand-service {
-  font-size: 10px;
-  font-weight: 500;
-  opacity: 0.75;
-  white-space: nowrap;
-  letter-spacing: 0.2px;
   line-height: 1.2;
+  color: white;
+}
+.eb-navbar-service-sub {
+  font-size: 9px;
+  font-weight: 500;
+  opacity: 0.7;
+  white-space: nowrap;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  color: white;
 }
 .eb-navbar-right {
   display: flex;
